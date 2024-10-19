@@ -1,17 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from utils import explicit_method
 
+# Increment for explicit Euler
+Phi_explicit_euler = lambda ode, x_i, y_i: ode(x_i, y_i)
 
 ### Implementation of explicit Euler
-
 def explicit_euler(ode, y_0, x_grid):
-    y_hat_grid = [y_0]
-    for i in range(1, x_grid.size):
-        h = x_grid[i] - x_grid[i - 1]
-        y_hat_grid.append(y_hat_grid[i - 1] + h * ode(x_grid[i - 1], y_hat_grid[i - 1]))
-
-    return np.array(y_hat_grid)
-
+    return explicit_method(ode, y_0, x_grid, Phi_explicit_euler)
 
 # ODE solved for y'
 ode = lambda x, y: (1 / (1 + x) - y) / (1 + x)
