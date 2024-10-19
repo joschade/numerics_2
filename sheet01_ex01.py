@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 
 ### Implementation of explicit Euler
 
-def explicit_euler(fun, y_0, x_grid):
+def explicit_euler(ode, y_0, x_grid):
     y_hat_grid = [y_0]
     for i in range(1, x_grid.size):
         h = x_grid[i] - x_grid[i - 1]
-        y_hat_grid.append(y_hat_grid[i - 1] + h * fun(x_grid[i - 1], y_hat_grid[i - 1]))
+        y_hat_grid.append(y_hat_grid[i - 1] + h * ode(x_grid[i - 1], y_hat_grid[i - 1]))
 
     return np.array(y_hat_grid)
 
