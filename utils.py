@@ -3,7 +3,7 @@ import scipy.sparse as sp
 
 def reduced_poisson_matrix(n: int) -> sp.dia_matrix:
     offdiag = np.ones((n,))
-    diag = 2 * offdiag
+    diag = -2 * offdiag
     data = np.array([offdiag, diag, offdiag])
     offset = np.array([-1, 0, 1])
 
