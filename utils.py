@@ -7,7 +7,7 @@ def reduced_poisson_matrix(n: int) -> sp.dia_matrix:
     data = np.array([offdiag, diag, offdiag])
     offset = np.array([-1, 0, 1])
 
-    return sp.dia_matrix((data, offset), shape=(n, n))
+    return sp.dia_matrix((data, offset), shape=(n, n)).tocsc()
 
 
 def explicit_method(ode: callable, y_0: float, x_grid: np.array, Phi: callable) -> np.array:
@@ -17,3 +17,6 @@ def explicit_method(ode: callable, y_0: float, x_grid: np.array, Phi: callable) 
         y_hat_grid.append(y_hat_grid[i - 1] + h * Phi(ode, x_grid[i - 1], y_hat_grid[i - 1]))
 
     return np.array(y_hat_grid)
+
+def grid_from_stepsize(start=0., stop=1., stepsize=.1) -> np.array:
+    return np.linspace(start=start, stop=stop, num=int((stop-start)/stepsize))
