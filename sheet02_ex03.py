@@ -15,16 +15,17 @@ def l_squared_norm(f_grid, f_hat_grid: np.array) -> float:
     return sqrt(1/(f_grid.size)*squared_sum)
 
 
-for stepsize in stepsizes:
-    # consider only internal nodes
-    grid = grid_from_stepsize(stepsize=stepsize)[1:-1]
+if __name__ == "__main__":
+    for stepsize in stepsizes:
+        # consider only internal nodes
+        grid = grid_from_stepsize(stepsize=stepsize)[1:-1]
 
-    f_grid = f(grid)
-    u_grid = u(grid)
+        f_grid = f(grid)[1:-1]
+        u_grid = u(grid)
 
-    pois_matrix = reduced_poisson_matrix(f_grid.size)
-    u_hat_grid = spsolve(pois_matrix, stepsize**2*f_grid)
+        pois_matrix = reduced_poisson_matrix(f_grid.size)
+        u_hat_grid = spsolve(pois_matrix, stepsize**2*f_grid)
 
-    norm = l_squared_norm(u_grid, u_hat_grid)
+        norm = l_squared_norm(u_grid, u_hat_grid)
 
-    print(f'for {stepsize=}, {norm=}')
+        print(f'for {stepsize=}, {norm=}')
