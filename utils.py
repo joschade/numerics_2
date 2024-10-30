@@ -19,4 +19,4 @@ def explicit_method(ode: callable, y_0: float, x_grid: np.array, Phi: callable) 
     return np.array(y_hat_grid)
 
 def grid_from_stepsize(start=0., stop=1., stepsize=.1) -> np.array:
-    return np.linspace(start=start, stop=stop, num=int((stop-start)/stepsize))
+    return np.linspace(start=start, stop=stop, num=int(np.ceil((stop-start)/stepsize)+1))
