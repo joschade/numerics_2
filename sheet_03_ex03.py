@@ -36,7 +36,7 @@ def damped_jacobi(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1
 
     return x_k, iter-1, err
 
-if __name__ == "__main__": """
+if __name__ == "__main__":
     print('Sheet 03 Question 03 Subproblem b)')
 
     epsilons = np.linspace(.1,1.1, 11)
@@ -51,7 +51,7 @@ if __name__ == "__main__": """
         for epsilon in epsilons:
             print(f'  for {epsilon=}:')
             x, iter, err = damped_jacobi(A, x_0, f_grid, epsilon)
-            print(f'    iterations: {iter}, error: {err}') """
+            print(f'    iterations: {iter}, error: {err}')
 
 # subproblem c)
 def sor(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1e-10, maxiter=1e5) -> np.array:
@@ -72,7 +72,7 @@ def sor(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1e-10, maxi
     return x_k, iter-1, err
 
 if __name__ == "__main__":
-    print('Sheet 03 Question 03 Subproblem b)')
+    print('Sheet 03 Question 03 Subproblem c)')
 
     epsilons = grid_from_stepsize(.1, 2., .1)
 
