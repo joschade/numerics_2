@@ -4,7 +4,7 @@ from utils import reduced_poisson_matrix, grid_from_stepsize
 from scipy.sparse.linalg import spsolve
 
 f = lambda x: - 6*pi*cos(3*pi*x) + 9*pi**2*x*sin(3*pi*x)
-u = lambda x: - x*sin(3*pi*x)
+u = lambda x: x*sin(3*pi*x)
 stepsizes = [1/2**i for i in range(3,9)]
 
 def l_squared_norm(f_grid, f_hat_grid: np.array) -> float:
