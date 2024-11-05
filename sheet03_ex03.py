@@ -61,7 +61,7 @@ if __name__ == "__main__":
         results = list(executor.map(damped_jacobi_mp, *cartesian_product(np.array(hs), omegas)))
 
     df_dampedjac = pd.DataFrame(results, columns=['stepsize_inv', 'omega', 'iterations', 'error'])
-    df_dampedjac.to_csv('/sheet_03/df_dampedjac.csv')
+    df_dampedjac.to_csv('sheet_03/df_dampedjac.csv')
     print(df_dampedjac)
 
 # subproblem c)
@@ -85,7 +85,7 @@ def sor(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1e-10, maxi
 if __name__ == "__main__":
     print('Sheet 03 Question 03 Subproblem c)')
 
-    epsilons = grid_from_stepsize(.1, 2., .1)
+    omegas = grid_from_stepsize(.1, 2., .1)
 
 
     def sor_mp(h, omega: float):
@@ -98,9 +98,9 @@ if __name__ == "__main__":
         return h, omega, iter, err
 
 
-        with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
-            results = list(executor.map(sor_mp, *cartesian_product(np.array(hs), omegas)))
+    with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
+        results = list(executor.map(sor_mp, *cartesian_product(np.array(hs), omegas)))
 
-        df_sor = pd.DataFrame(results, columns=['stepsize_inv', 'omega', 'iterations', 'error'])
-        df_sor.to_csv('/sheet_03/df_sor.csv')
-        print(df_dampedjac)
+    df_sor = pd.DataFrame(results, columns=['stepsize_inv', 'omega', 'iterations', 'error'])
+    df_sor.to_csv('sheet_03/df_sor.csv')
+    print(df_sor)
