@@ -1,5 +1,8 @@
 import numpy as np
 import scipy.sparse as sp
+from jeepney.low_level import Array
+from pandas.core.arrays.arrow import ListAccessor
+
 
 def reduced_poisson_matrix(n: int) -> sp.dia_matrix:
     offdiag = np.ones((n,))
@@ -20,3 +23,7 @@ def explicit_method(ode: callable, y_0: float, x_grid: np.array, Phi: callable) 
 
 def grid_from_stepsize(start=0., stop=1., stepsize=.1) -> np.array:
     return np.linspace(start=start, stop=stop, num=int(np.ceil((stop-start)/stepsize)+1))
+
+def cartesian_product(array_1: np.array, array_2: np.array) -> np.array:
+    return np.repeat(array_1, array_2.size), np.tile(array_2, array_1.size)
+
