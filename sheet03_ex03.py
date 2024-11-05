@@ -12,7 +12,7 @@ import concurrent.futures
 if __name__ == "__main__":
     print('Sheet 03 Question 03 Subproblem a)')
 
-    # define list of stepsizes
+    # define list of inverse stepsizes
     hs = [2 ** i for i in range(3, 9)]
 
 
