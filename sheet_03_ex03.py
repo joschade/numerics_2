@@ -1,9 +1,13 @@
 import scipy.sparse as sp
 import numpy as np
-from utils import reduced_poisson_matrix, grid_from_stepsize
+import pandas as pd
+from utils import reduced_poisson_matrix, cartesian_product
 from scipy.sparse.linalg import norm, inv
 from sheet02_ex03 import f
 
+# for multiprocessing
+import concurrent.futures
+import itertools
 
 
 # define list of stepsizes
@@ -39,19 +43,26 @@ def damped_jacobi(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1
 if __name__ == "__main__":
     print('Sheet 03 Question 03 Subproblem b)')
 
-    epsilons = np.linspace(.1,1.1, 11)
+    list_dampedjac = []
+    omegas = np.linspace(.1,1.1, 11)
 
-    for h in hs:
-        print(f'for {h=}:')
+    ## boil down to arguments to be iterated over
+    def damped_jacobi_mp(h, omega: float):
         x_grid = np.linspace(0, 1, h)[1:-1]
         f_grid = f(x_grid)
 
         A = reduced_poisson_matrix(x_grid.size)
         x_0 = np.zeros(x_grid.size)
-        for epsilon in epsilons:
-            print(f'  for {epsilon=}:')
-            x, iter, err = damped_jacobi(A, x_0, f_grid, epsilon)
-            print(f'    iterations: {iter}, error: {err}')
+        _, iter, err = damped_jacobi(A, x_0, f_grid, omega)
+        return h, iter, err
+
+
+
+    with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
+        results = list(executor.map(damped_jacobi_mp, *cartesian_product(np.array(hs), omegas)))
+
+    df_results = pd.DataFrame(results, columns=['stepsize_inv', 'iterations', 'error'])
+    print(df_results)
 
 # subproblem c)
 def sor(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1e-10, maxiter=1e5) -> np.array:
@@ -71,6 +82,7 @@ def sor(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1e-10, maxi
 
     return x_k, iter-1, err
 
+"""
 if __name__ == "__main__":
     print('Sheet 03 Question 03 Subproblem c)')
 
@@ -94,3 +106,4 @@ if __name__ == "__main__":
 
         argmax = np.argmin(np.array(relax))
         print(f'  best relaxation factor: {epsilons[argmax]}')
+"""
