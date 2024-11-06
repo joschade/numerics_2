@@ -16,11 +16,11 @@ if __name__ == "__main__":
     hs = [2 ** i for i in range(3, 9)]
 
 
-# subproblem a)
-for h in hs:
-    A = 1 / h ** 2 * reduced_poisson_matrix(h)
-    cond = norm(A, ord=1) * norm(inv(A), ord=1)
-    print(f'condition number stepsize 1/{h} is {cond}')
+    # subproblem a)
+    for h in hs:
+        A = 1 / h ** 2 * reduced_poisson_matrix(h)
+        cond = norm(A, ord=1) * norm(inv(A), ord=1)
+        print(f'condition number stepsize 1/{h} is {cond}')
 
 # subproblem b)
 def damped_jacobi(A: np.array, x_0: np.array, b:np.array, omega: float, minerr=1e-10, maxiter=1e5) -> np.array:
