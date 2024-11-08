@@ -12,7 +12,6 @@ if __name__ == "__main__":
     # define list of inverse stepsizes
     hs = [2 ** i for i in range(3, 9)]
 
-
     # for parallelization
     def sor_mp(h: float):
         x_grid = np.linspace(0, 1, h)[1:-1]
