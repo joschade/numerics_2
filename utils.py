@@ -1,7 +1,5 @@
 import numpy as np
 import scipy.sparse as sp
-from jeepney.low_level import Array
-from pandas.core.arrays.arrow import ListAccessor
 
 
 def reduced_poisson_matrix(n: int, h=1.0) -> sp.dia_matrix:
