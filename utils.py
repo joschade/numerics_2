@@ -4,13 +4,13 @@ from jeepney.low_level import Array
 from pandas.core.arrays.arrow import ListAccessor
 
 
-def reduced_poisson_matrix(n: int) -> sp.dia_matrix:
+def reduced_poisson_matrix(n: int, h=1.0) -> sp.dia_matrix:
     offdiag = np.ones((n,))
     diag = -2 * offdiag
     data = np.array([offdiag, diag, offdiag])
     offset = np.array([-1, 0, 1])
 
-    return sp.dia_matrix((data, offset), shape=(n, n)).tocsc()
+    return 1/h**2*sp.dia_matrix((data, offset), shape=(n, n)).tocsc()
 
 
 def explicit_method(ode: callable, y_0: float, x_grid: np.array, Phi: callable) -> np.array:
