@@ -91,6 +91,8 @@ def gauss_seidel(A: np.array, b:np.array, x_0 = None, tol=1e-10, maxiter=1e5) ->
 if __name__ == "__main__":
     print('Sheet 07 Question 03 Subproblem d)')
 
+    tol = 1e-10
+
     results_gmres = []
     results_jacobi = []
     results_gauss_seidel = []
@@ -104,17 +106,17 @@ if __name__ == "__main__":
             A = -epsilon * utils.reduced_poisson_matrix(x_grid.size, h) + backdiff_matrix(x_grid.size, h)
 
             # GMRES
-            u_hat_grid, iter = gmres(A, f_grid, maxiter=f_grid.size, tol=1e-10)
+            u_hat_grid, iter = gmres(A, f_grid, maxiter=f_grid.size, tol=tol)
             if iter == 0: iter = f_grid.size
 
             results_gmres.append([h, epsilon, iter, l_squared_norm(u_grid, u_hat_grid)])
 
             # Jacobi
-            u_hat_grid, iter, _ = jacobi(A, f_grid, maxiter=f_grid.size, tol=1e-10)
+            u_hat_grid, iter, _ = jacobi(A, f_grid, maxiter=f_grid.size, tol=tol)
             results_jacobi.append([h, epsilon, iter, l_squared_norm(u_grid, u_hat_grid)])
 
             # Gauss-Seidel
-            u_hat_grid, iter, _ = gauss_seidel(A, f_grid, maxiter=f_grid.size, tol=1e-10)
+            u_hat_grid, iter, _ = gauss_seidel(A, f_grid, maxiter=f_grid.size, tol=tol)
             results_gauss_seidel.append([h, epsilon, iter, l_squared_norm(u_grid, u_hat_grid)])
 
     df_gmres = pd.DataFrame(results_gmres, columns=['h', 'epsilon', 'iters', 'l_squared_error'])
