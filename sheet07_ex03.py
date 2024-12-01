@@ -1,9 +1,9 @@
 import numpy as np
 import scipy.sparse as sp
+
 import utils
 import pandas as pd
 
-from concurrent.futures import ProcessPoolExecutor
 from scipy.sparse.linalg import gmres, inv
 
 from numpy import exp
@@ -43,8 +43,12 @@ if __name__ == "__main__":
 
     df_backwards = pd.DataFrame(results, columns=['epsilon',  'h', 'l_squared_error'])
     print('results for backwards difference:')
-    print(df_backwards)
+    print(f'{df_backwards=}')
     df_backwards.to_csv('sheet_07/df_backwards.csv')
+
+    df_backwards_pivot = df_backwards.pivot(columns='epsilon', index='h', values='l_squared_error')
+    df_backwards_pivot.to_csv('sheet_07/df_backwards_pivot.csv')
+    print(f'{df_backwards_pivot=}')
 
 # This section answers 07.03 d)
 
@@ -116,11 +120,20 @@ if __name__ == "__main__":
     df_gmres = pd.DataFrame(results_gmres, columns=['h', 'epsilon', 'iters', 'l_squared_error'])
     df_gmres.to_csv('sheet_07/df_gmres.csv')
     print(f'{df_gmres=}')
+    df_gmres_pivot = df_gmres.pivot(columns='h', index='epsilon', values='iters')
+    df_gmres_pivot.to_csv('sheet_07/df_gmres_pivot.csv')
+    print(f'{df_gmres_pivot=}')
 
     df_jacobi = pd.DataFrame(results_jacobi, columns=['h', 'epsilon', 'iters', 'l_squared_error'])
     df_jacobi.to_csv('sheet_07/df_jacobi.csv')
     print(f'{df_jacobi=}')
+    df_jacobi_pviot = df_jacobi.pivot(columns='h', index='epsilon', values='iters')
+    df_jacobi_pviot.to_csv('sheet_07/df_jacobi_pivot.csv')
+    print(f'{df_jacobi_pviot=}')
 
     df_gauss_seidel = pd.DataFrame(results_gauss_seidel, columns=['h', 'epsilon', 'iters', 'l_squared_error'])
     df_gauss_seidel.to_csv('sheet_07/df_gauss_seidel.csv')
     print(f'{df_gauss_seidel=}')
+    df_gauss_seidel_pivot = df_gauss_seidel.pivot(columns='h', index='epsilon', values='iters')
+    df_gauss_seidel_pivot.to_csv('sheet_07/df_gauss_seidel_pivot.csv')
+    print(f'{df_gauss_seidel_pivot=}')
